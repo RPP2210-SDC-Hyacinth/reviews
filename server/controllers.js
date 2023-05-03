@@ -11,3 +11,13 @@ exports.getReviews = function(req, res) {
         res.send(response);
     })
 };
+
+exports.getMetadata = function(req, res) {
+
+    var query = req.params.product_id;
+
+    getMetadata(query)
+    .then((response) => {
+        res.send(response);
+    })
+}

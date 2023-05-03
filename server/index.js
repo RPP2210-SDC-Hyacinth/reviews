@@ -9,7 +9,9 @@ const port = 6000;
 const app = express();
 app.use(bodyParser.json());
 
-app.get('/reviews/:product_id', controller.getReviews);
+app.get('/reviews/:product_id', controller.getReviews)
+
+app.get('/reviews/:product_id/metadata', controller.getMetadata)
 
 app.listen(port, () => {
   console.log('Listening on port: ', port)
