@@ -10,6 +10,9 @@ exports.getReviews = function(req, res) {
     .then((response) => {
         res.send(response);
     })
+    .catch((err) => {
+        console.log('error getReviews', err)
+    })
 };
 
 exports.getMetadata = function(req, res) {
@@ -19,5 +22,8 @@ exports.getMetadata = function(req, res) {
     getMetadata(query)
     .then((response) => {
         res.send(response);
+    })
+    .catch((err) => {
+        console.log('error getMetadata', err)
     })
 }

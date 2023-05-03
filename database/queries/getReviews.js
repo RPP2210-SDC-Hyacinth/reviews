@@ -10,11 +10,11 @@ const getReviews = function({ product_id, count, sort}) {
   return new Promise ((resolve, reject) => {
 
     const query = `
-    SELECT r.review_id, r.product_id, r.rating, r.date, r.summary, r.body, r.recommended, r.reported, r.reviewer_name, r.reviewer_email, r.response, r.helpfulness,
+    SELECT r.review_id, r.rating, r.date, r.summary, r.body, r.recommend, r.reported, r.reviewer_name, r.reviewer_email, r.response, r.helpfulness,
       ( SELECT coalesce(json_agg(to_json(photo)), '[]')
         FROM
           (
-            SELECT url
+            SELECT photo_id as id, url
             FROM reviews_photos
             INNER JOIN reviews
             ON reviews.review_id = reviews_photos.review_id
@@ -27,12 +27,12 @@ const getReviews = function({ product_id, count, sort}) {
       LIMIT ${count}
       ;`
 
-
       db.query(query, (err, result) => {
         if (err) {
           reject('error retreving reviews', err)
         } else {
-          resolve(result.rows)
+          resolve({product_id, count, results:result.rows})
+          // resolve(result.rows)
         }
       })
   })

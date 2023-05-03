@@ -22,7 +22,7 @@ CREATE TABLE reviews (
   date bigint,
   summary VARCHAR,
   body VARCHAR(1000),
-  recommended boolean,
+  recommend boolean,
   reported boolean DEFAULT(false),
   reviewer_name VARCHAR,
   reviewer_email VARCHAR,
@@ -60,3 +60,4 @@ ALTER TABLE characteristics_reviews ADD FOREIGN KEY (characteristic_id) REFERENC
 ALTER TABLE characteristics_reviews ADD FOREIGN KEY (review_id) REFERENCES reviews (review_id);
 
 ALTER TABLE reviews ALTER COLUMN date TYPE timestamp without time zone USING TO_TIMESTAMP(date/1000);
+ALTER TABLE reviews ALTER COLUMN recommended TYPE
