@@ -27,14 +27,14 @@ const getReviews = function({ product_id, count, sort}) {
       LIMIT ${count}
       ;`
 
-      db.query(query, (err, result) => {
-        if (err) {
-          reject('error retreving reviews', err)
-        } else {
-          resolve({product_id, count, results:result.rows})
-          // resolve(result.rows)
-        }
-      })
+    db.query(query, (err, result) => {
+      if (err) {
+        reject('error retreving reviews in database', err)
+      } else {
+        resolve({product_id, count, results:result.rows})
+        // resolve(result.rows)
+      }
+    })
   })
 }
 

@@ -1,6 +1,7 @@
 // const db = require( './database/index.js');
 const getReviews = require('../database/queries/getReviews.js');
 const getMetadata = require('../database/queries/getMetadata.js');
+const postReview = require('../database/queries/postReview.js');
 
 exports.getReviews = function(req, res) {
 
@@ -26,4 +27,15 @@ exports.getMetadata = function(req, res) {
     .catch((err) => {
         console.log('error getMetadata', err)
     })
+}
+
+exports.postReview = function(req, res) {
+  var query = req.query;
+  postReview(query)
+  .then(() => {
+    console.log('review posted successfully')
+  })
+  .catch(() => {
+    console.log('error postReview', err)
+  })
 }

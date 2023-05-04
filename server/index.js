@@ -13,6 +13,8 @@ app.get('/reviews/:product_id', controller.getReviews)
 
 app.get('/reviews/:product_id/metadata', controller.getMetadata)
 
+app.post('/reviews/:product_id/postReview', controller.postReview)
+
 app.listen(port, () => {
   console.log('Listening on port: ', port)
 });
