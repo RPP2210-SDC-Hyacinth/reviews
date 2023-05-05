@@ -33,7 +33,7 @@ exports.postReview = function(req, res) {
   var query = req.query;
   postReview(query)
   .then(() => {
-    console.log('review posted successfully')
+    res.send('review posted successfully')
   })
   .catch(() => {
     console.log('error postReview', err)

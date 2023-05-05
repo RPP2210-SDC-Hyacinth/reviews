@@ -5,7 +5,6 @@ const postReview = function(data) {
 
   return new Promise((resolve) => {
 
-
   var query = `
   INSERT INTO reviews(product_id, rating, date, summary, body, recommend, reviewer_name, reviewer_email, helpfulness)
   VALUES (${data.product_id}, ${data.rating}, current_timestamp, '${data.summary}', '${data.body}', ${data.recommend}, '${data.reviewer_name}', '${data.reviewer_email}', 0)

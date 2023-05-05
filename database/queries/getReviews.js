@@ -10,29 +10,42 @@ const getReviews = function({ product_id, count, sort}) {
   return new Promise ((resolve, reject) => {
 
     const query = `
-    SELECT r.review_id, r.rating, r.date, r.summary, r.body, r.recommend, r.reported, r.reviewer_name, r.reviewer_email, r.response, r.helpfulness,
-      ( SELECT coalesce(json_agg(to_json(photo)), '[]')
+    SELECT json_build_object(
+      'product_id', ${product_id},
+      'counts', ${count},
+      'results', (
+        SELECT json_agg(to_json(results))
         FROM
-          (
-            SELECT photo_id as id, url
-            FROM reviews_photos
-            INNER JOIN reviews
-            ON reviews.review_id = reviews_photos.review_id
-            WHERE reviews_photos.review_id = r.review_id
-          ) photo
-      ) as photos
-      FROM reviews r
-      WHERE r.product_id = ${product_id}
-      order by ${sort}
-      LIMIT ${count}
-      ;`
+        (
+          SELECT review_id, rating, date, summary, body, recommend, reported, reviewer_name, reviewer_email, response, helpfulness,
+            (
+              SELECT coalesce(json_agg(to_json(photo)), '[]')
+              FROM
+              (
+                SELECT photo_id as id, url
+                FROM reviews_photos
+                INNER JOIN reviews r2
+                ON r2.review_id = reviews_photos.review_id
+                WHERE reviews_photos.review_id = r.review_id
+              ) photo
+            ) as photos
+          FROM reviews r
+          WHERE r.product_id = reviews.product_id
+          ORDER BY ${sort}
+          LIMIT ${count}
+        ) results
+      )
+    )
+    FROM reviews
+    WHERE reviews.product_id = ${product_id}
+    GROUP BY reviews.product_id
+    `
 
     db.query(query, (err, result) => {
       if (err) {
         reject('error retreving reviews in database', err)
       } else {
-        resolve({product_id, count, results:result.rows})
-        // resolve(result.rows)
+        resolve(result.rows[0].json_build_object)
       }
     })
   })
