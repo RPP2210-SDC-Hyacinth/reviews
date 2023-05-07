@@ -15,10 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.7.2",
-    "chai": "^4.3.7",
-    "chai-http": "^4.3.0",
     "eslint": "^8.38.0",
-    "morgan": "^1.10.0",
     "pg": "^8.10.0",
     "supertest": "^6.3.3"
   },
