@@ -3,22 +3,19 @@ const Promise = require("bluebird");
 
 const reportReview = function(review_id) {
 
-  return new Promise ((reject, resolve) => {
+  const query = `
+  UPDATE reviews
+  SET reported = TRUE
+  WHERE review_id = ${review_id}
+  RETURNING reported
+  `
 
-    const query = `
-    UPDATE reviews
-    SET reported = TRUE
-    WHERE review_id = ${review_id}
-    RETURNING reported
-    `
-
-    db.query(query, (err, result) => {
-      if (err) {
-        reject('error report review in database', err)
-      } else {
-        resolve(result.rows[0])
-      }
-    })
+  return db.query(query)
+  .then((result) => {
+    return result.rows[0]
+  })
+  .catch((err) => {
+    console.log('error report review in database', err)
   })
 
 }

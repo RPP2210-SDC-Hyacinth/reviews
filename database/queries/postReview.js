@@ -3,15 +3,13 @@ const Promise = require("bluebird");
 
 const postReview = function(data) {
 
-  return new Promise((resolve) => {
-
   var query = `
   INSERT INTO reviews(product_id, rating, date, summary, body, recommend, reviewer_name, reviewer_email, helpfulness)
   VALUES (${data.product_id}, ${data.rating}, current_timestamp, '${data.summary}', '${data.body}', ${data.recommend}, '${data.reviewer_name}', '${data.reviewer_email}', 0)
   RETURNING review_id
   `
 
-  db.query(query)
+  return db.query(query)
   .then((response) => {
     var review_id = response.rows[0].review_id;
     console.log('review_id', review_id)
@@ -49,12 +47,12 @@ const postReview = function(data) {
         })
       })
      }
-     resolve();
+     return;
   })
   .catch((err) => {
     console.log('error postReview in reviews database', err);
   });
-})
+
 }
 
 module.exports = postReview;
