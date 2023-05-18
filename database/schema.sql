@@ -3,7 +3,7 @@ DROP DATABASE IF EXISTS sdc CASCADE;
 CREATE DATABASE sdc;
 
 
-\c SDC;
+\c sdc;
 
 CREATE TABLE IF NOT EXISTS products (
   product_id INT NOT NULL,
@@ -58,7 +58,6 @@ ALTER TABLE characteristics ADD FOREIGN KEY (product_id) REFERENCES products (pr
 ALTER TABLE characteristics_reviews ADD FOREIGN KEY (characteristic_id) REFERENCES characteristics (characteristic_id);
 ALTER TABLE characteristics_reviews ADD FOREIGN KEY (review_id) REFERENCES reviews (review_id);
 
-ALTER TABLE reviews ALTER COLUMN date TYPE timestamp without time zone USING TO_TIMESTAMP(date/1000);
 
 \copy reviews from /Users/linlin/Hack-Reactor/Reviews/datas/reviews.csv delimiter',' CSV HEADER;
 \copy reviews_photos from '/Users/linlin/Hack-Reactor/Reviews/datas/reviews_photos.csv' delimiter',' CSV HEADER;
@@ -70,13 +69,11 @@ SELECT setval(pg_get_serial_sequence('reviews_photos', 'photo_id'), max(photo_id
 SELECT setval(pg_get_serial_sequence('characteristics', 'characteristic_id'), max(characteristic_id)) FROM characteristics;
 SELECT setval(pg_get_serial_sequence('characteristics_reviews', 'char_review_id'), max(char_review_id)) FROM characteristics_reviews;
 
-CREATE INDEX review_id_idx ON reviews(review_id);
 CREATE INDEX photo_review_id_idx ON reviews_photos(review_id);
 CREATE INDEX characteristics_review_id_idx ON characteristics_reviews(review_id);
 
 CREATE INDEX review_product_id_idx ON reviews(product_id);
-CREATE INDEX characteristic_product_id_idx ON characteristics(product_id);
 
-CREATE INDEX characteristic_id_idx ON characteristics(characteristic_id);
 CREATE INDEX review_characteristic_id_idx ON characteristics_reviews(characteristic_id);
+CREATE INDEX characteristic_product_id_idx ON characteristics(product_id);
 
