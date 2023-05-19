@@ -52,9 +52,7 @@ CREATE TABLE characteristics_reviews (
   PRIMARY KEY (char_review_id)
 );
 
-ALTER TABLE reviews ADD FOREIGN KEY (product_id) REFERENCES products (product_id);
 ALTER TABLE reviews_photos ADD FOREIGN KEY (review_id) REFERENCES reviews (review_id);
-ALTER TABLE characteristics ADD FOREIGN KEY (product_id) REFERENCES products (product_id);
 ALTER TABLE characteristics_reviews ADD FOREIGN KEY (characteristic_id) REFERENCES characteristics (characteristic_id);
 ALTER TABLE characteristics_reviews ADD FOREIGN KEY (review_id) REFERENCES reviews (review_id);
 
@@ -76,4 +74,10 @@ CREATE INDEX review_product_id_idx ON reviews(product_id);
 
 CREATE INDEX review_characteristic_id_idx ON characteristics_reviews(characteristic_id);
 CREATE INDEX characteristic_product_id_idx ON characteristics(product_id);
+
+----------------------------------------------
+
+scp -i sdc-reviews.pem /Users/linlin/Desktop/datas/characteristic_reviews.csv ubuntu@ec2-3-17-56-125.us-east-2.compute.amazonaws.com:datas
+
+\copy characteristics_reviews from '/home/ubuntu/datas/characteristic_reviews.csv' delimiter',' CSV HEADER;
 
