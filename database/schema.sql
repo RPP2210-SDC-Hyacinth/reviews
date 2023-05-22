@@ -56,6 +56,7 @@ ALTER TABLE reviews_photos ADD FOREIGN KEY (review_id) REFERENCES reviews (revie
 ALTER TABLE characteristics_reviews ADD FOREIGN KEY (characteristic_id) REFERENCES characteristics (characteristic_id);
 ALTER TABLE characteristics_reviews ADD FOREIGN KEY (review_id) REFERENCES reviews (review_id);
 
+ALTER TABLE reviews ALTER COLUMN date TYPE timestamp without time zone USING TO_TIMESTAMP(date/1000);
 
 \copy reviews from /Users/linlin/Hack-Reactor/Reviews/datas/reviews.csv delimiter',' CSV HEADER;
 \copy reviews_photos from '/Users/linlin/Hack-Reactor/Reviews/datas/reviews_photos.csv' delimiter',' CSV HEADER;
@@ -77,7 +78,7 @@ CREATE INDEX characteristic_product_id_idx ON characteristics(product_id);
 
 ----------------------------------------------
 
-scp -i sdc-reviews.pem /Users/linlin/Desktop/datas/characteristic_reviews.csv ubuntu@ec2-3-17-56-125.us-east-2.compute.amazonaws.com:datas
+scp -i SDC.pem /Users/linlin/Desktop/datas/characteristics.csv ubuntu@ec2-18-218-70-52.us-east-2.compute.amazonaws.com:datas
 
-\copy characteristics_reviews from '/home/ubuntu/datas/characteristic_reviews.csv' delimiter',' CSV HEADER;
+\copy reviews from '/home/ubuntu/datas/reviews.csv' delimiter',' CSV HEADER;
 
