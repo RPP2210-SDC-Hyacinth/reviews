@@ -22,11 +22,11 @@ app.put('/reviews/:product_id/report', controller.reportReview);
 
 app.put('/reviews/:product_id/delete', controller.deleteReview);
 
-app.get('/loaderio-4f6cdda7596f1bacca1480f65e8eae45.txt', (req, res) => {
+app.get('/loaderio-a70bd69a690690f237e7ba38bdf2116d.txt', (req, res) => {
   const options = {
     root: path.join(__dirname)
   };
-  const fileName = 'loaderio-4f6cdda7596f1bacca1480f65e8eae45.txt';
+  const fileName = 'loaderio-a70bd69a690690f237e7ba38bdf2116d.txt';
   res.sendFile(fileName, options)
 })
 
