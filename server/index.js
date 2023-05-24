@@ -8,25 +8,25 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.json());
 
-app.get('/reviews/:product_id', controller.getReviews);
+app.get('/reviews/', controller.getReviews);
 
 app.get('/reviews/metadata', controller.getMetadata);
 
-app.get('/reviews/:product_id/search', controller.search);
+app.get('/reviews/search', controller.search);
 
-app.post('/reviews/:product_id/postReview', controller.postReview);
+app.post('/reviews/postReview', controller.postReview);
 
-app.put('/reviews/:product_id/helpful', controller.markHelpful);
+app.put('/reviews/helpful', controller.markHelpful);
 
-app.put('/reviews/:product_id/report', controller.reportReview);
+app.put('/reviews/report', controller.reportReview);
 
-app.put('/reviews/:product_id/delete', controller.deleteReview);
+app.put('/reviews/delete', controller.deleteReview);
 
-app.get('/loaderio-a70bd69a690690f237e7ba38bdf2116d.txt', (req, res) => {
+app.get('/loaderio-632dcdc95e04513e17db429c77059c88.txt', (req, res) => {
   const options = {
     root: path.join(__dirname)
   };
-  const fileName = 'loaderio-a70bd69a690690f237e7ba38bdf2116d.txt';
+  const fileName = 'loaderio-632dcdc95e04513e17db429c77059c88.txt';
   res.sendFile(fileName, options)
 })
 
