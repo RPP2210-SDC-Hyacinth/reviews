@@ -21,7 +21,7 @@ exports.getReviews = function(req, res) {
 
 exports.getMetadata = function(req, res) {
 
-  var product_id = req.params.product_id;
+  var product_id = req.query.product_id;
 
   getMetadata(product_id)
   .then((response) => {
