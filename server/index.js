@@ -22,23 +22,13 @@ app.put('/reviews/:product_id/report', controller.reportReview);
 
 app.put('/reviews/:product_id/delete', controller.deleteReview);
 
-app.get('loaderio-9960bc98b37a711c02be52e225a31290.txt', (req, res) => {
+app.get('/loaderio-9960bc98b37a711c02be52e225a31290.txt', (req, res) => {
   const options = {
     root: path.join(__dirname)
   };
   const fileName = 'loaderio-9960bc98b37a711c02be52e225a31290.txt';
-  res.sendFile(fileName, options, function (err) {
-    if (err) {
-        console.log('err sending file', err);
-    } else {
-        console.log('Sent:', fileName);
-    }
-  });
+  res.sendFile(fileName, options)
 })
-
-
-
-
 
 
 const port = 6000;
