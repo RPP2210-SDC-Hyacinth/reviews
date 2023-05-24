@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.get('/reviews/:product_id', controller.getReviews);
 
-app.get('/reviews/:product_id/metadata', controller.getMetadata);
+app.get('/reviews/metadata', controller.getMetadata);
 
 app.get('/reviews/:product_id/search', controller.search);
 
