@@ -1,4 +1,6 @@
 require('dotenv').config();
+require('newrelic');
+
 const controller = require('./controllers.js');
 const path = require('path');
 
@@ -8,7 +10,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.json());
 
-app.get('/reviews/', controller.getReviews);
+app.get('/reviews', controller.getReviews);
 
 app.get('/reviews/metadata', controller.getMetadata);
 
@@ -22,11 +24,11 @@ app.put('/reviews/report', controller.reportReview);
 
 app.put('/reviews/delete', controller.deleteReview);
 
-app.get('/loaderio-632dcdc95e04513e17db429c77059c88.txt', (req, res) => {
+app.get('/loaderio-b021babf52edde1135762c72ce32ab2d.txt', (req, res) => {
   const options = {
     root: path.join(__dirname)
   };
-  const fileName = 'loaderio-632dcdc95e04513e17db429c77059c88.txt';
+  const fileName = 'loaderio-b021babf52edde1135762c72ce32ab2d  .txt';
   res.sendFile(fileName, options)
 })
 
