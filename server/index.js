@@ -1,5 +1,4 @@
 require('dotenv').config();
-require('newrelic');
 
 const controller = require('./controllers.js');
 const path = require('path');
@@ -24,12 +23,13 @@ app.put('/reviews/report', controller.reportReview);
 
 app.put('/reviews/delete', controller.deleteReview);
 
-app.get('/loaderio-b021babf52edde1135762c72ce32ab2d.txt', (req, res) => {
-  const options = {
-    root: path.join(__dirname)
-  };
-  const fileName = 'loaderio-b021babf52edde1135762c72ce32ab2d  .txt';
-  res.sendFile(fileName, options)
+app.get(`/${process.env.LOADER}`, (req, res) => {
+  // const options = {
+  //   root: path.join(__dirname)
+  // };
+  // const fileName =`${process.env.LOADER}`;
+  // res.sendFile(fileName, options)
+  res.send(process.env.LOADER);
 })
 
 
