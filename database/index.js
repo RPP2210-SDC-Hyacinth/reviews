@@ -15,15 +15,16 @@ const db = new Pool ({
   //   process.exit(-1)
   // })
 
+  // db.on('connect', client => {
+  //   console.log('Connected to database: ', client.database)
+  // })
+
   db.connect((err) => {
     if (err) {
       console.log('err', err)
     } else {
-      console.log('Connected to database: ')
+      console.log(`Connected to database: ${process.env.DB_NAME}`)
     }
-  })
-  // db.on('connect', client => {
-  //   console.log('Connected to database: ', client.database)
-  // })
+  });
 
 module.exports = db;

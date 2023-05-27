@@ -2,16 +2,18 @@ const db = require('../index.js');
 const Promise = require("bluebird");
 
 const getReviews = async function(data) {
+
   let sort;
   if (data.sort === 'helpful')  sort = 'r.helpfulness desc';
   if (data.sort === 'newest')  sort ='r.date desc';
   if (data.sort === 'relevant' || !data.sort)  sort = 'r.helpfulness desc, r.date desc';
 
   let count = data.count || 2;
+  let product_id = data.product_id
 
   const query = `
   SELECT json_build_object(
-    'product_id', ${data.product_id},
+    'product_id', ${product_id},
     'counts', ${count},
     'results', (
       SELECT json_agg(to_json(results))
@@ -37,7 +39,7 @@ const getReviews = async function(data) {
     )
   )
   FROM reviews
-  WHERE reviews.product_id = ${data.product_id}
+  WHERE reviews.product_id = ${product_id}
   GROUP BY reviews.product_id
   `
   return await db.query(query)
