@@ -6,6 +6,9 @@ const markHelpful = require('../database/queries/markHelpful.js');
 const reportReview = require('../database/queries/reportReview.js');
 const deleteReview = require('../database/queries/deleteReview.js');
 
+// const { createClient } = require('redis');
+// const redis = createClient();
+
 exports.getReviews = async (req, res) => {
   var data = req.query;
 
