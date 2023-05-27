@@ -9,15 +9,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 const { createClient } = require('redis');
-
-const client = createClient({
-  url: 'redis://redis:6379'
-});
-client.connect();
-client.on('connect', (err)=>{
-  if(err) throw err;
-  else console.log('Redis Connected..!');
-});
+redis = createClient();
 
 app.get('/reviews', controller.getReviews);
 
@@ -37,11 +29,11 @@ app.get(`/${process.env.LOADER}`, (req, res) => {
   res.send(process.env.LOADER);
 })
 
-
-
 const port = 6000;
 
-app.listen(port, () => {
+app.listen(port, async () => {
+  await redis.connect();
+  redis.on("error", (error) => console.log('Error :', error));
   console.log('Listening on port: ', port);
 });
 
