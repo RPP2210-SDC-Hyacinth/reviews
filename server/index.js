@@ -1,6 +1,6 @@
 require('dotenv').config();
+
 const controller = require('./controllers.js');
-const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -8,7 +8,18 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.json());
 
-app.get('/reviews/', controller.getReviews);
+const { createClient } = require('redis');
+
+const client = createClient({
+  url: 'redis://redis:6379'
+});
+client.connect();
+client.on('connect', (err)=>{
+  if(err) throw err;
+  else console.log('Redis Connected..!');
+});
+
+app.get('/reviews', controller.getReviews);
 
 app.get('/reviews/metadata', controller.getMetadata);
 
@@ -22,19 +33,16 @@ app.put('/reviews/report', controller.reportReview);
 
 app.put('/reviews/delete', controller.deleteReview);
 
-app.get('/loaderio-632dcdc95e04513e17db429c77059c88.txt', (req, res) => {
-  const options = {
-    root: path.join(__dirname)
-  };
-  const fileName = 'loaderio-632dcdc95e04513e17db429c77059c88.txt';
-  res.sendFile(fileName, options)
+app.get(`/${process.env.LOADER}`, (req, res) => {
+  res.send(process.env.LOADER);
 })
+
 
 
 const port = 6000;
 
 app.listen(port, () => {
-  console.log('Listening on port: ', port)
+  console.log('Listening on port: ', port);
 });
 
 module.exports = app

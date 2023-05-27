@@ -1,11 +1,15 @@
 const db = require('../index.js');
 const Promise = require("bluebird");
 
-const getReviews = async function({ product_id, count, sort }) {
+const getReviews = async function(data) {
 
-  if (sort === 'helpful') sort = 'r.helpfulness desc';
-  if (sort === 'newest') sort ='r.date desc';
-  if (sort === 'relevant') sort = 'r.helpfulness desc, r.date desc';
+  let sort;
+  if (data.sort === 'helpful')  sort = 'r.helpfulness desc';
+  if (data.sort === 'newest')  sort ='r.date desc';
+  if (data.sort === 'relevant' || !data.sort)  sort = 'r.helpfulness desc, r.date desc';
+
+  let count = data.count || 2;
+  let product_id = data.product_id
 
   const query = `
   SELECT json_build_object(
