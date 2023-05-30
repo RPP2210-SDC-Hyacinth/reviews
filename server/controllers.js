@@ -6,6 +6,7 @@ const markHelpful = require('../database/queries/markHelpful.js');
 const reportReview = require('../database/queries/reportReview.js');
 const deleteReview = require('../database/queries/deleteReview.js');
 
+<<<<<<< HEAD
 const { createClient } = require('redis');
 const redis = createClient();
 
@@ -13,6 +14,10 @@ const redis = createClient();
   redis.on("error", (error) => console.log('Error :', error));
   await redis.connect();
 })();
+=======
+// const { createClient } = require('redis');
+// const redis = createClient();
+>>>>>>> 86efedee22865aff02423d16fc9e22221dd28fab
 
 exports.getReviews = async (req, res) => {
 try {
