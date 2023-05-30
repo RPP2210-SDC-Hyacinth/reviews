@@ -6,7 +6,16 @@ const markHelpful = require('../database/queries/markHelpful.js');
 const reportReview = require('../database/queries/reportReview.js');
 const deleteReview = require('../database/queries/deleteReview.js');
 
+const { createClient } = require('redis');
+const redis = createClient();
+
+(async () => {
+  redis.on("error", (error) => console.log('Error :', error));
+  await redis.connect();
+})();
+
 exports.getReviews = async (req, res) => {
+try {
   var data = req.query;
 
   const cache = await redis.get(`product_id=${data.product_id} reviews`);
@@ -23,6 +32,7 @@ exports.getReviews = async (req, res) => {
     res.status(404).send('error getReviews', err)
     })
   }
+} catch (err) { console.log(err)};
 };
 
 exports.getMetadata = async (req, res) => {

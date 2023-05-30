@@ -8,8 +8,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.json());
 
-const { createClient } = require('redis');
-redis = createClient();
 
 app.get('/reviews', controller.getReviews);
 
@@ -26,14 +24,12 @@ app.put('/reviews/report', controller.reportReview);
 app.put('/reviews/delete', controller.deleteReview);
 
 app.get(`/${process.env.LOADER}`, (req, res) => {
-  res.send(process.env.LOADER);
+  res.send(process.env.LOADER1);
 })
 
 const port = 6000;
 
-app.listen(port, async () => {
-  await redis.connect();
-  redis.on("error", (error) => console.log('Error :', error));
+app.listen(port,() => {
   console.log('Listening on port: ', port);
 });
 
