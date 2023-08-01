@@ -3,3 +3,4 @@ config.js
 datas
 .env
 Dockerfile
+.gitattributes
